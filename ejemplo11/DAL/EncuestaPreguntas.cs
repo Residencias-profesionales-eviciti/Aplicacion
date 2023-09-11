@@ -14,9 +14,9 @@ namespace ejemplo11.DAL
     {
         string cn = ConfigurationManager.ConnectionStrings["DBSISTEMAstring"].ToString();
 
-        public List<EncuestaPregunta> Listar()
+        public List<Encuesta_Pregunta> Listar()
         {
-            List<EncuestaPregunta> lista = new List<EncuestaPregunta>();
+            List<Encuesta_Pregunta> lista = new List<Encuesta_Pregunta>();
 
             try
             {
@@ -32,7 +32,7 @@ namespace ejemplo11.DAL
                         while (dr.Read())
                         {
                             lista.Add(
-                                new EncuestaPregunta()
+                                new Encuesta_Pregunta()
                                 {
                                     IdEncuesta_pregunta = Convert.ToInt32(dr["IdEncuesta_pregunta"]),
                                     oIdEncuesta = new Encuesta() { IdEncuesta = Convert.ToInt32(dr["IdEncuesta"]), Nombre = dr["Nombre"].ToString() },
@@ -46,14 +46,14 @@ namespace ejemplo11.DAL
             }
             catch
             {
-                lista = new List<EncuestaPregunta>();
+                lista = new List<Encuesta_Pregunta>();
 
             }
             return lista;
         }
 
 
-        public int Registrar(EncuestaPregunta obj, out string mensaje)
+        public int Registrar(Encuesta_Pregunta obj, out string mensaje)
         {
             int idautogenerado = 0;
             mensaje = string.Empty;
@@ -89,7 +89,7 @@ namespace ejemplo11.DAL
 
         }
 
-        public bool Editar(EncuestaPregunta obj, out string mensaje)
+        public bool Editar(Encuesta_Pregunta obj, out string mensaje)
         {
             bool resultado = false;
             mensaje = string.Empty;

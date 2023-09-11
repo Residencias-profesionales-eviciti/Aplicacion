@@ -151,7 +151,7 @@
     <Compile Include="Models\Dashboard.cs" />
     <Compile Include="Models\Departamento.cs" />
     <Compile Include="Models\Encuesta.cs" />
-    <Compile Include="Models\EncuestaPregunta.cs" />
+    <Compile Include="Models\Encuesta_Pregunta.cs" />
     <Compile Include="Models\Encuesta_Pregunta_Respuesta.cs" />
     <Compile Include="Models\Tipo_Pregunta.cs" />
     <Compile Include="Models\tipo_usuario.cs" />

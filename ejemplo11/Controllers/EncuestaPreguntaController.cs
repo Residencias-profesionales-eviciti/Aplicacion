@@ -23,7 +23,7 @@ namespace ejemplo11.Controllers
 
         public JsonResult ListarEncuestaPregunta()
         {
-            List<EncuestaPregunta> olista = new List<EncuestaPregunta>();
+            List<Encuesta_Pregunta> olista = new List<Encuesta_Pregunta>();
 
             olista = new CN_EncuestaPregunta().Listar(); //llamando a la capa de negocio
 
@@ -31,7 +31,7 @@ namespace ejemplo11.Controllers
         }
 
         [HttpPost]
-        public JsonResult GuardarEncuestaPregunta(EncuestaPregunta objeto)
+        public JsonResult GuardarEncuestaPregunta(Encuesta_Pregunta objeto)
         {
             object resultado; //Debe ir solo la variable
             string Mensaje = string.Empty;

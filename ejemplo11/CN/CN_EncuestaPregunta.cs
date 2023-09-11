@@ -15,12 +15,12 @@ namespace ejemplo11.CN
         private EncuestaPreguntas objCapaDato = new EncuestaPreguntas();
 
 
-        public List<EncuestaPregunta> Listar()
+        public List<Encuesta_Pregunta> Listar()
         {
             return objCapaDato.Listar();
         }
 
-        public int Registrar(EncuestaPregunta obj, out string Mensaje)
+        public int Registrar(Encuesta_Pregunta obj, out string Mensaje)
         {
 
             Mensaje = string.Empty;
@@ -42,7 +42,7 @@ namespace ejemplo11.CN
             }
         }
 
-        public bool Editar(EncuestaPregunta obj, out string Mensaje)
+        public bool Editar(Encuesta_Pregunta obj, out string Mensaje)
         {
             Mensaje = string.Empty;
 
