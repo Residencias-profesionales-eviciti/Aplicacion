@@ -1,0 +1,500 @@
+﻿@model ejemplo11.Models.Encuesta
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Dashboard</a></li>
+    <li class="breadcrumb-item active">Preguntas</li>
+</ol>
+
+
+<div class="card">
+    <div class="card-header">
+
+        <i class="fas fa-users me-1"></i> Preguntas de Encuesta
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear Nuevo</button>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+    <div class="col-log-12">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-outline card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Detalles de la encuesta</h3>
+                    </div>
+                    <div class="card-body p-0 py-2">
+                        <div class="container-fluid">
+                            <p>Titulo: @Html.DisplayFor(model => model.Nombre)</p>
+                            <p class="mb-0">Descripción: @Html.DisplayFor(model => model.Descripcion)</p> <br />
+                            <small></small>
+                            <p>Inicio: @Html.DisplayFor(model => model.Fecha_inicio)</p>
+
+                            <p>Final: @Html.DisplayFor(model => model.Fecha_cierre)</p>
+                            <p>Número de encuestados: <b></b></p>
+                        </div>
+                        <hr class="border-primary">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card card-outline card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><b>Preguntas de la encuesta</b></h3>
+                        <div class="card-tools">
+                            <button class="btn btn-block btn-sm btn-default btn-flat border-success nueva_pregunta" type="button" onclick="abrirModal(null)"><i class="fa fa-plus"></i> Agregar nueva pregunta</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <form action="" id="manage-question">
+            <div class="modal-content">
+
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva pregunta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input id="txtid" type="hidden" value="0" />
+
+                    <div class="container-fluid">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-sm-6 border-right">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="sid">
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Pregunta</label>
+                                        <textarea name="question" id="txtpregunta" cols="30" rows="4" class="form-control"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Tipo de Respuesta a Pregunta</label>
+                                        <select name="type" id="type" class="custom-select custom-select-sm">
+                                            <option value="" disabled="" selected="">Selecciona aquí</option>
+                                            <option value="radio_opt">Respuesta Sencila/Botón Círculo</option>
+                                            <option value="check_opt">Respuesta Multiple/Cuadros de Chequeo</option>
+                                            <option value="textfield_s">Campo de Texto/ Área de Texto</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <b>Avance</b>
+                                    <div class="preview" id="preview">
+                                        <center><b>Seleccione primero el tipo de respuesta a la pregunta.</b></center>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="check_opt_clone" style="display: none">
+    <div class="callout callout-info">
+        <table width="100%" class="table">
+            <colgroup>
+                <col width="10%">
+                <col width="80%">
+                <col width="10%">
+            </colgroup>
+            <thead>
+                <tr class="">
+                    <th class="text-center"></th>
+
+                    <th class="text-center">
+                        <label for="" class="control-label">Sello</label>
+                    </th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="">
+                    <td class="text-center">
+                        <div class="icheck-primary d-inline" data-count='1'>
+                            <input type="checkbox" id="checkboxPrimary1" checked="">
+                            <label for="checkboxPrimary1">
+                            </label>
+                        </div>
+                    </td>
+
+                    <td class="text-center">
+                        <input type="text" class="form-control form-control-sm check_inp" name="label[]">
+                    </td>
+                    <td class="text-center"></td>
+                </tr>
+                <tr class="">
+                    <td class="text-center">
+                        <div class="icheck-primary d-inline" data-count='2'>
+                            <input type="checkbox" id="checkboxPrimary2">
+                            <label for="checkboxPrimary2">
+                            </label>
+                        </div>
+                    </td>
+
+                    <td class="text-center">
+                        <input type="text" class="form-control form-control-sm check_inp" name="label[]">
+                    </td>
+                    <td class="text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-sm btn-flat btn-default" type="button" onclick="new_check($(this))"><i class="fa fa-plus"></i> Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="radio_opt_clone" style="display: none">
+    <div class="callout callout-info">
+        <table width="100%" class="table">
+            <colgroup>
+                <col width="10%">
+                <col width="80%">
+                <col width="10%">
+            </colgroup>
+            <thead>
+                <tr class="">
+                    <th class="text-center"></th>
+
+                    <th class="text-center">
+                        <label for="" class="control-label">Sello</label>
+                    </th>
+                    <th class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="">
+                    <td class="text-center">
+                        <div class="icheck-primary d-inline" data-count='1'>
+                            <input type="radio" id="radioPrimary1" name="radio" checked="">
+                            <label for="radioPrimary1">
+                            </label>
+                        </div>
+                    </td>
+
+                    <td class="text-center">
+                        <input type="text" class="form-control form-control-sm check_inp" name="label[]">
+                    </td>
+                    <td class="text-center"></td>
+                </tr>
+                <tr class="">
+                    <td class="text-center">
+                        <div class="icheck-primary d-inline" data-count='2'>
+                            <input type="radio" id="radioPrimary2" name="radio">
+                            <label for="radioPrimary2">
+                            </label>
+                        </div>
+                    </td>
+
+                    <td class="text-center">
+                        <input type="text" class="form-control form-control-sm check_inp" name="label[]">
+                    </td>
+                    <td class="text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-sm btn-flat btn-default" type="button" onclick="new_radio($(this))"><i class="fa fa-plus"></i> Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="textfield_s_clone" style="display: none">
+    <div class="callout callout-info">
+        <textarea name="frm_opt" id="" cols="30" rows="10" class="form-control" disabled="" placeholder="Escribe tu respuesta aquí..."></textarea>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script>
+
+            function new_check(_this) {
+                var tbody = _this.closest('.row').siblings('table').find('tbody')
+                var count = tbody.find('tr').last().find('.icheck-primary').attr('data-count')
+                count++;
+                console.log(count)
+                var opt = '';
+                opt += '<td class="text-center pt-1"><div class="icheck-primary d-inline" data-count = "' + count + '"><input type="checkbox" id="checkboxPrimary' + count + '"><label for="checkboxPrimary' + count + '"> </label></div></td>';
+                opt += '<td class="text-center"><input type="text" class="form-control form-control-sm check_inp" name="label[]"></td>';
+                opt += '<td class="text-center"><a href="javascript:void(0)" onclick="$(this).closest(\'tr\').remove()"><span class="fa fa-times" ></span></a></td>';
+                var tr = $('<tr></tr>')
+                tr.append(opt)
+                tbody.append(tr)
+            }
+
+            function new_radio(_this) {
+                var tbody = _this.closest('.row').siblings('table').find('tbody')
+                var count = tbody.find('tr').last().find('.icheck-primary').attr('data-count')
+                count++;
+                console.log(count)
+                var opt = '';
+                opt += '<td class="text-center pt-1"><div class="icheck-primary d-inline" data-count = "' + count + '"><input type="radio" id="radioPrimary' + count + '" name="radio"><label for="radioPrimary' + count + '"> </label></div></td>';
+                opt += '<td class="text-center"><input type="text" class="form-control form-control-sm check_inp" name="label[]"></td>';
+                opt += '<td class="text-center"><a href="javascript:void(0)" onclick="$(this).closest(\'tr\').remove()"><span class="fa fa-times" ></span></a></td>';
+                var tr = $('<tr></tr>')
+                tr.append(opt)
+                tbody.append(tr)
+            }
+
+            function check_opt() {
+                var check_opt_clone = $('#check_opt_clone').clone()
+                $('.preview').html(check_opt_clone.html())
+            }
+
+            function radio_opt() {
+                var radio_opt_clone = $('#radio_opt_clone').clone()
+                $('.preview').html(radio_opt_clone.html())
+            }
+
+            function textfield_s() {
+                var textfield_s_clone = $('#textfield_s_clone').clone()
+                $('.preview').html(textfield_s_clone.html())
+            }
+
+            $('[name="type"]').change(function () {
+                window[$(this).val()]()
+            })
+
+            function abrirModal(json) {
+
+                $("#txtid").val(0);
+                $("#txtpregunta").val("");
+                $("#type").val("");
+
+                $("#preview").val($("#preview option:first").val());
+
+                $("#mensajeError").hide();
+
+                if ("type" == "radio_opt") {
+                    $("#preview").val($("#preview option:first").val());
+                }
+                else if ("type" == "check_opt") {
+                    $("#preview").val("radio_opt");
+                }
+                else if ("type" == "textfield_s") {
+                    $("#preview").val($("#preview option:first").val());
+                }
+                else {
+                    $("#preview").val($("#preview option:first").val());
+                }
+
+                $("#mensajeError").hide();
+
+
+                //Modal con información, editar
+                if (json != null) {
+
+                    $("#txtid").val(json.IdEncuesta);
+                    $("#txtnombre").val(json.Nombre);
+                    $("#txtdescripcion").val(json.Descripcion);
+                    $("#txtfechaInicio").val(json.Fecha_inicio);
+                    $("#txtfechaCierre").val(json.Fecha_cierre);
+                    $("#txtoactivo").val(json.Status == true ? 1 : 0);
+                    $("#txtousuario").val(json.oIdUsuario.IdUsuario);
+
+                }
+
+                $("#FormModal").modal("show");
+        }
+
+        $(function () {
+            $('#manage-question').submit(function (e) {
+                e.preventDefault()
+                var form = $(this)
+                var url = form.attr('action')
+                var data = form.serialize()
+                $.post(url, data, function (response) {
+                    if (response.success == true) {
+                        $('#manage-question')[0].reset()
+                        alert(response.message)
+                    } else {
+                        alert(response.message)
+                    }
+                }, 'json')
+                return false;
+            })
+        })
+
+
+
+
+
+
+        function Guardar() {
+
+            var Pregunta = {
+
+                IdEncuesta_pregunta: $("#txtid").val(),
+                Titulo: $("#txtpregunta").val(),
+                Tipo_respuesta: $("#type").val(),
+                Forma_respuesta: $('#manage-question').val()
+
+
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarEncuestaPregunta", "EncuestaPregunta")',
+                type: "POST",
+                data: JSON.stringify({ objeto: Pregunta }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    debugger;
+
+                        //Nuevo Usuario
+
+                    if (Pregunta.IdEncuesta_pregunta == 0) {
+
+                        if (data.resultado != 0) {
+                            Pregunta.IdEncuesta_pregunta = data.resultado;
+                            tabladata.row.add(Pregunta).draw(false);
+                            $("#FormModal").modal("hide");
+                            swal("¡Bien hecho!", "La pregunta se ha agregado de forma correcta", "success");
+
+                        } else {
+                            $("#mensajeError").text(data.Mensaje);
+                            $("#mensajeError").show();
+                            /*swal("Mensaje", "No se pudo registrar el usuario", "error");*/
+                            swal("Advertencia", data.Mensaje, "warning");
+                        }
+
+                    }
+                        //Editar Pregunta
+
+                    else {
+                        if (data.resultado) {
+                            tabladata.row(filaSeleccionada).data(Pregunta).draw(false);
+                            filaSeleccionada = null;
+                            $("#FormModal").modal("hide");
+                            swal("¡Exito!", "La pregunta se ha editado de forma correcta.", "success");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                            swal("Opps", "No se pudo guardar los cambios.", "error");
+                        }
+                    }
+                },
+
+                error: function (error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+                }
+
+            });
+        }
+
+    </script>
+}
+
+
+
+
+
+
+@*<div>
+        <h4>Encuesta</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.IdEncuesta)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IdEncuesta)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha_inicio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fecha_inicio)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Fecha_cierre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Fecha_cierre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

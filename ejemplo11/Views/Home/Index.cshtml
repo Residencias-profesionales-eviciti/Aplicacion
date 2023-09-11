@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+@*Titulo*@
+<h1 class="mt-4">Panel de Administración</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Flujo de control</li>
+</ol>
+
+@*Tarjetas*@
+
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-body">
+                Cantidad Departamentos
+                <h6 id="TotalDepartamento">0</h6>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Departamento")">Ver Detalles</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-body">
+                Cantidad Usuarios
+                <h6 id="TotalUsuario">0</h6>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Usuario")">Ver Detalles</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-success text-white mb-4">
+            <div class="card-body">
+                Cantidad Encuestas
+                <h6 id="TotalEncuesta">0</h6>
+
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Encuesta")">Ver Detalles</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-danger text-white mb-4">
+            <div class="card-body">
+                Cantidad Cuestionarios
+                <h6 id="TotalCuestionario">0</h6>
+
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="@Url.Action("Index", "Cuestionario")">Ver Detalles</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+        jQuery.ajax({
+            url: '@Url.Action("VistaDashboard", "Reporte")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                var objeto = data.resultado;
+
+                $("#TotalUsuario").text(objeto.TotalUsuario)
+                $("#TotalDepartamento").text(objeto.TotalDepartamento)
+                $("#TotalEncuesta").text(objeto.TotalEncuesta)
+                $("#TotalCuestionario").text(objeto.TotalCuestionario)
+
+            }
+        });
+
+    </script>
+
+}
