@@ -74,8 +74,6 @@ namespace ejemplo11.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult CambiarCal
 
 
         //public ActionResult CerrarSesion()
