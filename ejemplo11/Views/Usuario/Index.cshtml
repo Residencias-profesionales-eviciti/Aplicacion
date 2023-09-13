@@ -92,12 +92,12 @@
                     </div>
 
                     @*<div class="col-sm-6">
-            <label for="cboactivo" class="form-label">Status</label>
-            <select id="cboactivo" class="form-select">
-                <option value="1">Si</option>
-                <option value="0">No</option>
-            </select>
-        </div>*@
+                            <label for="cboactivo" class="form-label">Status</label>
+                            <select id="cboactivo" class="form-select">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>*@
                     <div class="col-sm-4">
                         <label for="cboactivo" class="form-label">Status</label>
                         <br />
@@ -241,6 +241,7 @@
 
         })
 
+        $(document).ready(function () {
         tabladata = $("#tabla").DataTable({
 
             responsive: true,
@@ -305,7 +306,55 @@
 
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.13.5/i18n/es-ES.json"
-            }
+            },
+
+            columnsDefs: [
+                {
+                    targets: 0,
+                    visible: false
+                }
+            ],
+
+
+            dom: 'Bfrtip',
+            buttons: [
+                //'excel',
+                {
+                    extend: 'excelHtml5',
+                    text: 'Exportar Excel',
+                    filename: 'Reporte Empleados',
+                    title: '',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    },
+                    className: 'btn-exportar-excel',
+                },
+
+                //'pdf',
+                {
+                    extend: "pdfHtml5",
+                    text: "Exportar PDF",
+                    filename: "Usuarios",
+                    title: "",
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }, 
+
+                //'print'
+                {
+                    extend: 'print',
+                    title: '',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    },
+                    className: 'btn-exportar-print'
+
+                },
+            ]
+
+        });
+
         });
 
         $(document).ready(function () {
@@ -752,4 +801,4 @@
             </tr>
         }*@
 
-    @*</table>*@
+@*</table>*@

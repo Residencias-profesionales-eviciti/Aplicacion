@@ -52,7 +52,8 @@ namespace ejemplo11.Controllers
         // GET: EncuestaPregunta/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var query= "select * from Encuesta_Pregunta where IdEncuesta_pregunta = " + id;
+            return View("Details", query);
         }
 
         // GET: EncuestaPregunta/Create

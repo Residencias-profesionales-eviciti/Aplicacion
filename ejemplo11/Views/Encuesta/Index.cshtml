@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<ejemplo11.Models.Encuesta>
 
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,9 +9,6 @@
     <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Panel de administración</a></li>
     <li class="breadcrumb-item active">Encuesta</li>
 </ol>
-
-
-
 
 <div class="card">
     <div class="card-header">
@@ -39,7 +35,7 @@
                     <th>Fecha de cierre</th>
                     <th>Titular</th>
                     <th>Status</th>
-                    <th></th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,12 +80,19 @@
                         <input type="datetime-local" class="form-control" id="txtfechaCierre" autocomplete="off">
                     </div>
 
-                    <div class="col-sm-6">
+                    @*<div class="col-sm-6">
                         <label for="txtoactivo" class="form-label">Activo</label>
                         <select id="txtoactivo" class="form-select">
                             <option value="1">Si</option>
                             <option value="0">No</option>
                         </select>
+                    </div>*@
+
+                    <div class="col-sm-4">
+                        <label for="cboactivo" class="form-label">Status</label>
+                        <br />
+                        <input type="checkbox" class="cboactivo" value="1"> Activo <br>
+                        <input type="checkbox" class="cboactivo" value="2"> Inactivo <br>
                     </div>
 
 
@@ -127,6 +130,22 @@
         var tabladata;
         var filaSeleccionada;
 
+        function ObtenerFecha() {
+
+            var d = new Date();
+            var month = d.getMonth() + 1;
+            var day = d.getDate();
+            var output = (('' + day).length < 2 ? '0' : '') + day + '/' + (('' + month).length < 2 ? '0' : '') + month + '/' + d.getFullYear();
+
+            return output;
+        }
+
+        function ConvertirFecha(Fecha_inicio) {
+            var fecha = new Date(parseInt(Fecha_inicio.substr(6)));
+
+            return fecha.getDate() + "/" + (fecha.getMonth() + 1) + "/" + fecha.getFullYear();
+        }
+
         $(".btnEditar").click(function (eve) {
             $("#modal-content").load("/Encuesta/GuardarEncuesta/" + $(this).data("id"));
         });
@@ -159,8 +178,6 @@
 
 
 
-
-
         tabladata = $("#tabla").DataTable({
             responsive: true,
             ordering: false,
@@ -175,8 +192,22 @@
                 { "data": "IdEncuesta" },
                 { "data": "Nombre" },
                 { "data": "Descripcion" },
-                { "data": "Fecha_inicio" },
-                { "data": "Fecha_cierre" },
+                //{
+                //    "data": "Fecha_inicio", "render": function (data) {
+                //        return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                //    }
+
+
+                {
+                    "data": "Fecha_inicio", "render": function (data) {
+                        return ConvertirFecha(data);
+                    }
+
+                },
+                { "data": "Fecha_cierre", "render": function (data) {
+                        return ConvertirFecha(data);
+                    }
+                },
                 {
                     "data": "oIdUsuario", "render": function (data) {
                         return data.Nombres
@@ -208,7 +239,12 @@
             }
         });
 
+        $(document).ready(function () {
 
+            $('.cboactivo').click(function () {
+                $('.cboactivo').not(this).prop('checked', false);
+            });
+        });
 
 
         //Opción de elegir Usuario
@@ -243,7 +279,7 @@
             $("#txtdescripcion").val("");
             $("#txtfechaInicio").val("");
             $("#txtfechaCierre").val("");
-            $("#txtoactivo").val("");
+            $("#cboactivo").val("");
             $("#txtousuario").val($("#txtousuario option:first").val());
 
             $("#mensajeError").hide();
@@ -257,7 +293,12 @@
                 $("#txtdescripcion").val(json.Descripcion);
                 $("#txtfechaInicio").val(json.Fecha_inicio);
                 $("#txtfechaCierre").val(json.Fecha_cierre);
-                $("#txtoactivo").val(json.Status == true ? 1 : 0);
+                /*$("#txtoactivo").val(json.Status == true ? 1 : 0);*/
+                if (json.Status == true) {
+                    $('.cboactivo[value="1"]').prop('checked', true);
+                } else {
+                    $('.cboactivo[value="2"]').prop('checked', true);
+                }
                 //$("#txtousuario").val(json.oIdUsuario.IdUsuario);
 
             }
@@ -271,7 +312,6 @@
             filaSeleccionada = $(this).closest("tr");
 
             var data = tabladata.row(filaSeleccionada).data();
-
             abrirModal(data)
         })
 
@@ -357,7 +397,8 @@
                 Descripcion: $("#txtdescripcion").val(),
                 Fecha_inicio: $("#txtfechaInicio").val(),
                 Fecha_cierre: $("#txtfechaCierre").val(),
-                Status: $("#txtoactivo").val() == 1 ? true : false
+                /*Status: $('.cboactivo:checked').val() == 1 ? true : false*/
+                Status: $('.cboactivo:checked').val() == 1 ? true : false
 
             }
 
@@ -384,7 +425,7 @@
                             } else {
                                 $("#mensajeError").text(data.mensaje);
                                 $("#mensajeError").show();
-                                swal("Opps", "No se pudo registrar la encuesta.", "error");
+                                swal("Advertencia", data.mensaje, "warning");
 
                             }
                         }

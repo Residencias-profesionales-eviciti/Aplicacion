@@ -181,6 +181,7 @@ namespace ejemplo11.DAL
                         new Encuesta()
                         {
                             //oIdUsuario = dr["IdUsuario"] == DBNull.Value ? null : new Usuario() { IdUsuario = Convert.ToInt32(dr["IdUsuario"]), Nombres = dr["Nombres"].ToString() },
+                            IdEncuesta = Convert.ToInt32(dr["IdEncuesta"]),
                             Nombre = dr["Nombre"].ToString(),
                             Descripcion = dr["Descripcion"].ToString(),
                             Fecha_inicio = Convert.ToDateTime(dr["Fecha_inicio"]),

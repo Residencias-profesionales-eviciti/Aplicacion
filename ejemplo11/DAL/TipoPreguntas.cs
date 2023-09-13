@@ -33,7 +33,7 @@ namespace ejemplo11.DAL
                             lista.Add(
                                 new Tipo_Pregunta()
                                 {
-                                    IdTipo_pregunta = Convert.ToInt32(dr["IdTipo_pregunta"]),
+                                    ID = Convert.ToInt32(dr["ID"]),
                                     Descripcion = dr["Descripcion"].ToString()
                                 });
                         }

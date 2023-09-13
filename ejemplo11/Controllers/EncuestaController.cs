@@ -63,9 +63,12 @@ namespace ejemplo11.Controllers
         public ActionResult Details(int ID)
         {
             var lista = new CN_Encuesta().Find(ID).FirstOrDefault();
+            var query = "select * from Encuesta where IdEncuesta = " + ID;
+
             if (lista == null)
             {
                 return RedirectToAction("Index");
+
             }
             return View("Details", lista);
         }

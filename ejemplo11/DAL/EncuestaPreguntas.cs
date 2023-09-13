@@ -37,8 +37,8 @@ namespace ejemplo11.DAL
                                     IdEncuesta_pregunta = Convert.ToInt32(dr["IdEncuesta_pregunta"]),
                                     oIdEncuesta = new Encuesta() { IdEncuesta = Convert.ToInt32(dr["IdEncuesta"]), Nombre = dr["Nombre"].ToString() },
                                     Titulo = dr["Titulo"].ToString(),
-                                    Forma_respuesta = dr["Opcion"].ToString(),
-                                    oIdTipo_pregunta = new Tipo_Pregunta() { IdTipo_pregunta = Convert.ToInt32(dr["IdTipo_pregunta"]), Descripcion = dr["Descripcion"].ToString() }    
+                                    Forma_Opcion = dr["Forma_Opcion"].ToString(),
+                                    oIdTipo_pregunta = new Tipo_Pregunta() { ID = Convert.ToInt32(dr["IdTipo_pregunta"]), Descripcion = dr["Descripcion"].ToString() }    
                                 });
                         }
                     }
@@ -64,8 +64,10 @@ namespace ejemplo11.DAL
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarEncuestaPregunta", oconexion);
                     cmd.Parameters.AddWithValue("Titulo", obj.Titulo);
-                    //cmd.Parameters.AddWithValue("IdEncuesta", obj.oIdEncuesta.IdEncuesta);
-                    cmd.Parameters.AddWithValue("Forma_respuesta", obj.Forma_respuesta);
+                    cmd.Parameters.AddWithValue("IdTipo_pregunta", obj.oIdTipo_pregunta.ID);
+                    cmd.Parameters.AddWithValue("IdEncuesta", obj.oIdEncuesta.IdEncuesta);
+
+                    cmd.Parameters.AddWithValue("Forma_Opcion", obj.Forma_Opcion);
 
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
 
@@ -101,7 +103,7 @@ namespace ejemplo11.DAL
                     SqlCommand cmd = new SqlCommand("sp_RegistrarEncuestaPregunta", oconexion);
                     cmd.Parameters.AddWithValue("Titulo", obj.Titulo);
                     //cmd.Parameters.AddWithValue("IdEncuesta", obj.oIdEncuesta.IdEncuesta);
-                    cmd.Parameters.AddWithValue("Forma_respuesta", obj.Forma_respuesta);
+                    cmd.Parameters.AddWithValue("Forma_Opcion", obj.Forma_Opcion);
                     
 
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;

@@ -15,7 +15,7 @@ namespace ejemplo11.Models
         public Tipo_Pregunta oIdTipo_pregunta { get; set; }
 
         public string Titulo { get; set; }
-        public string Forma_respuesta { get; set; }
+        public string Forma_Opcion { get; set; }
 
     }
 }

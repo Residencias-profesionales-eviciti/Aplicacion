@@ -15,6 +15,16 @@ namespace ejemplo11
                         "~/Scripts/fontawesome/all.min.js",
                         "~/Scripts/DataTables/jquery.dataTables.js",
                         "~/Scripts/DataTables/dataTables.responsive.js",
+                        "~/Scripts/DataTables/dataTables.buttons.min.js",
+
+                        "~/Scripts/jszip.min.js",
+                        "~/Scripts/DataTables/buttons.html5.min.js",
+                        "~/Scripts/DataTables/buttons.print.min.js",
+                        
+
+                        "~/Scripts/pdfmake/pdfmake.min.js",
+                        "~/Scripts/pdfmake/vfs_fonts.js",
+
                         "~/Scripts/sweetalert.min.js",
                         "~/Scripts/jquery.validate.js",
                         "~/Scripts/scripts.js"));
